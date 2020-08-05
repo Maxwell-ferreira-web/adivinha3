@@ -1,0 +1,95 @@
+<meta charset="utf-8">
+
+<input/>
+<button>Compare com o meu segredo</button>
+
+<script>
+
+// Função sorteia() criada para poupar-nos de escrever  segredos.push(sorteia())" para cada número que quisermos inserir como chance de acerto do usuário; ou seja, AS QUANTIDADES DO ARRAY.
+	function sorteia() {
+
+		return Math.round(Math.random() * 10);
+	}
+	// Essa função sorteiaNumeros(quantidade), foi criada para devolver uma lista de segredos com quantos itens quisermos. Por isso, "quantidade como parâmetro". Portanto, essa função é para receber a quantidade de números aleatórios que queremos sortear.
+	function sorteiaNumeros (quantidade) {
+
+		// Essa "var segredos" não entra em conflito com outra no programa, que esteja fora desse bloco. Pois nesse caso, ela só existe para o bloco. EXPLICANDO: Tudo que está dentro da minha função, só existe dentro da função! A não ser que eu dê um "return" para capturar o resultado.
+		var segredos = []; // Aqui não tem mistério. Quando chamada a função, essa variável declara inicialmente, uma lista vazia.
+
+		// Preciso de um contador (no caso, a "var numero") que começa de 1.
+		var numero = 1;
+
+		// A "quantidade" aqui é o número declarado no "sorteiaNumero" da outra "var segredos" que logicamente, está fora desse bloco aqui.
+		while (numero <= quantidade) {
+
+			// Aqui sorteia um número aleatório.
+			var numeroAleatorio = sorteia();
+
+			// Esse "if" é para que não apareça 0 na lista de números da "var segredos = []".
+			if(numeroAleatorio !== 0) {
+
+				// Aqui digo que não encontrei o número aleatório ainda na lista da "var segredos = []". Pq, eu não verifiquei ele ainda na lista dessa "var segredos = []".
+				var achou = false;
+
+				// Esse "for" associado ao "if" a seguir, tem a função de percorrer a lista de segredos, para saber se o número gerado já existe na lista. Serve para evitar duplicidade!!!
+				for(var posicao = 0; posicao < segredos.length; posicao++) {
+
+					// Esse "if" percorre a lista de segredos da var segredos = [].
+					if(segredos[posicao] == numeroAleatorio) { achou = true; // Quando achar... 
+							break; // para!
+					}
+				}
+
+				// Aqui será falso enquanto não encontrar o número na minha lista de segredos ou seja, a "var segredos = []" e segue gerando os outros números; OU SEJA, "segredos.push(numeroAleatorio)" associado ao comando "numero++", no limite da quantidade de números a serem gerados, conforme a "var segredos = sorteiaNumeros(n)" que se encontra, ATENÇÃO!!! fora do bloco do while.
+				if(achou == false) {
+
+					segredos.push(numeroAleatorio);// A cada vez que executa essa linha, joga um novo nº pra dentro da lista de segredos; ou seja, a "var segredos[]".
+					numero++;
+				}
+			}
+		}
+
+		return segredos;
+	}
+	// Na "var segredos" do código "adivinha2" tinhamos aqui, 5,7,10,2,3
+	var segredos = sorteiaNumeros(5);
+
+	// Esse comando é para permitir fazer testes dos comandos no console.
+	console.log(segredos);
+
+	var input = document.querySelector("input");
+	input.focus();
+
+	function verifica() {
+// Aqui, dentro da função "verifica", vamos declarar uma variável "achou", recebendo falso.
+		var achou = false;
+
+		for(var posicao = 0; posicao < segredos.length; posicao++) {
+
+			if(input.value == segredos [posicao]) {
+
+		alert("Você ACERTOU!");
+// Aqui, antes do break, coloco "achou" nesse caso é "true", que contraria o "false" lá de cima. 
+		achou = true;
+		break;
+
+	} 
+
+}
+
+// Aqui está o "if" contrário do acima, pois não temos "else". Dessa forma, o programa continua rodando caso ainda não tenhamos acertado o número.
+	if(achou == false) {
+
+		alert("Você ERROU!!!!!");
+
+	}
+
+	input.value = "";
+	input.focus();
+
+}
+
+var button = document.querySelector("button");
+button.onclick = verifica;
+
+</script>
